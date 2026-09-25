@@ -20,11 +20,15 @@ jobs:
           java-version: '17'
           cache: 'gradle' # Optional: speeds up future builds
 
-      # FIX HERE: Upgraded to v4 and explicitly specified packages without 'tools'
       - name: Set up Android SDK
         uses: android-actions/setup-android@v4
         with:
           packages: 'platform-tools'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.7'
 
       - name: Accept SDK licenses
         run: yes | sdkmanager --licenses || true
