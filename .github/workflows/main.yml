@@ -12,23 +12,30 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # Modern Android apps need Java 17, and it comes pre-cached here
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
+          cache: 'gradle' # Optional: speeds up future builds
 
+      # FIX HERE: Upgraded to v4 and explicitly specified packages without 'tools'
       - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
+        uses: android-actions/setup-android@v4
+        with:
+          packages: 'platform-tools'
 
       - name: Accept SDK licenses
         run: yes | sdkmanager --licenses || true
 
-      - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v4
+      # Gives execution permission to the gradle wrapper built into your project
+      - name: Grant Execute Permission for Gradlew
+        run: chmod +x gradlew
 
+      # Using the local wrapper (./gradlew) is safer than global 'gradle' command
       - name: Build debug APK
-        run: gradle assembleDebug --stacktrace
+        run: ./gradlew assembleDebug --stacktrace
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
