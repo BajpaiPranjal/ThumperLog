@@ -1,22 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        // This is the Android Gradle Plugin version
-        classpath "com.android.tools.build:gradle:8.2.2"
-    }
-}
+// Repositories are configured centrally in settings.gradle to satisfy
+// dependencyResolutionManagement.repositoriesMode set to FAIL_ON_PROJECT_REPOS.
 
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
-}
-
-task clean(type: Delete) {
+tasks.register('clean', Delete) {
     delete rootProject.buildDir
 }
