@@ -29,13 +29,8 @@ jobs:
       - name: Accept SDK licenses
         run: yes | sdkmanager --licenses || true
 
-      # Gives execution permission to the gradle wrapper built into your project
-      - name: Grant Execute Permission for Gradlew
-        run: chmod +x gradlew
-
-      # Using the local wrapper (./gradlew) is safer than global 'gradle' command
       - name: Build debug APK
-        run: ./gradlew assembleDebug --stacktrace
+        run: gradle assembleDebug --stacktrace
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
